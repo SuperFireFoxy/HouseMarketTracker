@@ -131,8 +131,8 @@ MONGO_USER = "dba1"
 MONGO_PSW = "fuck2012"
 
 # LOG
-LOG_LEVEL = 'DEBUG'
-LOG_FILE = 'spider.log'
+# LOG_LEVEL = 'DEBUG'
+# LOG_FILE = 'spider.log'
 
 RETRY_ENABLED = True
 RETRY_TIMES = 10
