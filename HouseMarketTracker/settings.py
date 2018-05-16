@@ -110,11 +110,24 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 
 # MONGODB
-MONGO_HOST = "127.0.0.1"  # 主机IP
-MONGO_PORT = 27016  # 端口号
-MONGO_DB = "house_info_db_2018-05-14"  # 库名
+# MONGO_HW = "BBB"  # PC
+# MONGO_HOST = "127.0.0.1"  # 主机IP
+# MONGO_PORT = 27016  # 端口号
+# MONGO_DB = "house_info_db"  # 库名
+# MONGO_COLL = "chengdu"  # collection名
+# MONGO_ADMIN_USER = "admin"
+# MONGO_ADMIN_PSW = "fuck2012"
+
+
+MONGO_HW = "BBB"  # PC
+MONGO_HOST = "192.168.2.119"  # 主机IP
+MONGO_PORT = 27017  # 端口号
+MONGO_DB = "house_info_db"  # 库名
 MONGO_COLL = "chengdu"  # collection名
-MONGO_USER = "hid"
+MONGO_ADMIN_USER = "admin"
+MONGO_ADMIN_PSW = "fuck2012"
+
+MONGO_USER = "dba1"
 MONGO_PSW = "fuck2012"
 
 # LOG

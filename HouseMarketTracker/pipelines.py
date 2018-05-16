@@ -5,30 +5,45 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import logging
+import time
 
 import gridfs
 import requests
 from pymongo import MongoClient
 from tornado import concurrent
 
+from HouseMarketTracker import settings
+
 
 class HousemarkettrackerPipeline(object):
     def __init__(self):
-        # 链接数据库
-        uri = "mongodb://hid:fuck2012@192.168.2.119/house_info_db_2018-05-14?authMechanism=MONGODB-CR"
-        self.client = MongoClient(uri)
-
-        # self.client = MongoClient(host=settings.MONGO_HOST, port=settings.MONGO_PORT,
-        #                           authMechanism='SCRAM-SHA-1')
-        # 数据库登录需要帐号密码的话
-        # self.client.admin.authenticate(settings.MONGO_USER, settings.MONGO_PSW)
-        # time_str = time.strftime("_%Y-%m-%d", time.localtime())
-        self.db = self.client.get_database(settings.MONGO_DB)  # 获得数据库的句柄
-        self.coll = self.db.get_collection(settings.MONGO_COLL)  # 获得collection的句柄
-        self.fs = gridfs.GridFS(self.db, settings.MONGO_COLL + "_images")
-
-        # self.oldloop = asyncio.get_event_loop()
+        self.client, self.db, self.coll, self.fs = self.init_db()
         logging.getLogger("urllib3").setLevel(logging.WARNING)
+
+    def init_db(self):
+        date_str = time.strftime("_%Y-%m-%d", time.localtime())
+        db_name = settings.MONGO_DB + date_str
+        auth_mechanism = 'SCRAM-SHA-1'
+        if settings.MONGO_HW == "BBB":
+            auth_mechanism = 'MONGODB-CR'
+        # use admin user to drop target database
+        client = MongoClient(host=settings.MONGO_HOST,
+                             port=settings.MONGO_PORT,
+                             username=settings.MONGO_ADMIN_USER,
+                             password=settings.MONGO_ADMIN_PSW,
+                             authMechanism=auth_mechanism)
+        client.drop_database(db_name)
+
+        # use admin user to create database and costumer user
+        db = client.get_database(db_name)
+        roles = [{'role': 'dbOwner', 'db': db_name}]
+        db.add_user(name=settings.MONGO_USER, password=settings.MONGO_PSW, roles=roles)
+        coll = db.get_collection(settings.MONGO_COLL)
+        fs = gridfs.GridFS(db, settings.MONGO_COLL + "_images")
+
+        coll.insert({"hello": "world"})
+        return client, db, coll, fs
+
 
     def process_item(self, item, spider):
         postItem = dict(item)
@@ -74,4 +89,5 @@ class HousemarkettrackerPipeline(object):
 if __name__ == "__main__":
     cd = HousemarkettrackerPipeline()
     item = {"hello": "world"}
-    cd.process_item(item, None)
+    # cd.process_item(item, None)
+    cd.init_db()
