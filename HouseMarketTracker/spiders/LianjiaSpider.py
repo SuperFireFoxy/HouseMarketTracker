@@ -1,9 +1,10 @@
 import re
 
 import scrapy
-from scrapy_splash import SplashRequest
 
 from HouseMarketTracker.items import HousemarkettrackerItem, HouseDetail
+from HouseMarketTracker.parser.CommentParser import CommentParser
+from HouseMarketTracker.parser.ParseUtil import ParseUtil
 
 
 def get_urls():
@@ -56,7 +57,9 @@ class ImagesParser():
             image_dict[title] = image_list
         item['house_images'] = image_dict
 
-        yield item
+        comments_url = meta['root_url'] + 'pinglun/'
+        yield from ParseUtil.start_request(comments_url, CommentParser().parse, meta)
+        # yield item
         # house_layout_url = meta['root_url'] + 'huxingtu/'
         # yield from ParseUtil.start_request(house_layout_url, HouseLayoutParser().parse, meta)
         # print(meta)
@@ -227,16 +230,3 @@ class HouseHomePageParser():
 #         item['house_images'] = HouseInfoParser.images_parser.parse(response)
 
 
-class ParseUtil():
-
-    @staticmethod
-    def start_request(url, parse_func, meta):
-        yield SplashRequest(url=url, callback=parse_func, meta=meta,
-                            args={
-                                # optional; parameters passed to Splash HTTP API
-                                'wait': 5,
-
-                                # 'url' is prefilled from request url
-                                # 'http_method' is set to 'POST' for POST requests
-                                # 'body' is set to request body for POST requests
-                            })
