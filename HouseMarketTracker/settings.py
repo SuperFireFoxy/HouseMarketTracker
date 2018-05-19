@@ -109,14 +109,6 @@ SPLASH_URL = 'http://127.0.0.1:8050'
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 
-# MONGODB
-# MONGO_HW = "BBB"  # PC
-# MONGO_HOST = "127.0.0.1"  # 主机IP
-# MONGO_PORT = 27016  # 端口号
-# MONGO_DB = "house_info_db"  # 库名
-# MONGO_COLL = "chengdu"  # collection名
-# MONGO_ADMIN_USER = "admin"
-# MONGO_ADMIN_PSW = "fuck2012"
 
 
 MONGO_HW = "BBB"  # PC
