@@ -125,10 +125,10 @@ MONGO_PORT = 27017  # 端口号
 MONGO_DB = "house_info_db"  # 库名
 MONGO_COLL = "chengdu"  # collection名
 MONGO_ADMIN_USER = "admin"
-MONGO_ADMIN_PSW = "fuck2012"
+MONGO_ADMIN_PSW = "adminpsw"
 
 MONGO_USER = "dba1"
-MONGO_PSW = "fuck2012"
+MONGO_PSW = "dba1_psw"
 
 # LOG
 # LOG_LEVEL = 'DEBUG'
