@@ -1,6 +1,7 @@
 import re
 from math import ceil
 
+from HouseMarketTracker.parser.NewsParser import NewsParser
 from HouseMarketTracker.parser.ParseUtil import ParseUtil
 
 
@@ -65,20 +66,22 @@ class CommentParser:
 
         current_page_str = res.xpath('//div[@class="page-box"]/@data-current').extract_first()
         if current_page_str is None:
-            yield item
+            yield from self.start_parse_news(meta)
         else:
             current_page = int(current_page_str)
             total_pages = ceil(int(res.xpath('//div[@class="page-box"]/@data-total-count').extract_first()) / 20.0)
             next_page_rul = meta['root_url'] + 'pinglun/pg' + str(current_page + 1)
 
             if current_page < total_pages:
-                # print('start process page: ' + str(current_page))
-                # print('totoal page: ' + str(total_pages))
-                # print(next_page_rul)
+
                 yield from ParseUtil.start_request(next_page_rul, CommentParser().parse_comments, meta)
             else:
-                # print(json.dumps(meta['item']['house_comment'], ensure_ascii=False))
-                yield item
+
+                yield from self.start_parse_news(meta)
+
+    def start_parse_news(self, meta):
+        news_url = meta['root_url'] + 'dongtai/'
+        yield from ParseUtil.start_request(news_url, NewsParser().parse, meta)
 
     def remove_tail(self, str):
         return re.sub('：', '', str)

@@ -42,4 +42,5 @@ class HousemarkettrackerItem(scrapy.Item):
     house_images = scrapy.Field(serializer=HouseDetail.self_define_serializer)
     house_layout = scrapy.Field(serializer=HouseDetail.self_define_serializer)
     house_comment = scrapy.Field(serializer=HouseDetail.self_define_serializer)
+    house_news = scrapy.Field(serializer=HouseDetail.self_define_serializer)
     pass

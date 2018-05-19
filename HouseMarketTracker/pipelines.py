@@ -41,7 +41,7 @@ class HousemarkettrackerPipeline(object):
         coll = db.get_collection(settings.MONGO_COLL)
         fs = gridfs.GridFS(db, settings.MONGO_COLL + "_images")
 
-        coll.insert({"hello": "world"})
+        # coll.insert({"hello": "world"})
         return client, db, coll, fs
 
 
