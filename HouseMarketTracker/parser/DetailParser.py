@@ -85,7 +85,6 @@ class DetailParser():
                 around_info_dict = {}
                 div_s = li.xpath('div/div')
                 for div in div_s:
-                    print(div.extract())
                     around_info_label = div.xpath('normalize-space(text())').extract()[0]
                     value_list = div.xpath('span/span')
 
