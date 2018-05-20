@@ -24,7 +24,7 @@ class CommentParser:
         meta = response.meta
 
         # meta['item'] = HousemarkettrackerItem()
-        # meta['root_url'] = "https://cd.fang.lianjia.com/loupan/p_xxwjyntabaip/"
+        # meta['root_url'] = "https://cd.fang.lianjia.com/loupan/p_hdwjhfaazop/"
 
         item = meta['item']
         item['house_comment'] = comment_dict
@@ -40,9 +40,10 @@ class CommentParser:
             # user
             user = li.xpath('div[@class="l_userpic"]')
             comment_content_dict['user_image'] = user.xpath('//img/@src').extract_first()
-            user_line = user.xpath('div[@class="info"]/text()').extract()
+            user_line = user.xpath('div[@class="info"]//text()').extract()
             comment_content_dict['user_name'] = self.normalize_space(user_line[0])
-            comment_content_dict['user_life'] = self.normalize_space(user_line[1])
+            if len(user_line) > 1:  # visitor don't have user life info
+                comment_content_dict['user_life'] = self.normalize_space(user_line[1])
             # comment
             comment = li.xpath('div[@class="r_comment"]')
             comment_content_dict['tag'] = comment.xpath('span[@class="tag"]/text()').extract_first()
