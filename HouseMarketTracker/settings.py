@@ -123,6 +123,7 @@ MONGO_USER = "dba1"
 MONGO_PSW = "dba1_psw"
 
 # LOG
+LOG_LEVEL = 'INFO'
 # LOG_LEVEL = 'DEBUG'
 # LOG_FILE = 'spider.log'
 
