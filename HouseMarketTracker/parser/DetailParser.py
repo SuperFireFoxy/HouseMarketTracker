@@ -1,5 +1,5 @@
 from HouseMarketTracker.items import HouseDetail
-from HouseMarketTracker.parser.ImagesParser import ImagesParser
+from HouseMarketTracker.parser.HouseHomePageParser import HouseHomePageParser
 from HouseMarketTracker.parser.ParseUtil import ParseUtil
 
 
@@ -19,8 +19,8 @@ class DetailParser():
         item['house_detail'] = HouseDetail(basic_dict, opening_info_list, plan_dict, pre_sales_list,
                                            facility_dict).__dict__
         meta['item'] = item
-        image_page_url = meta['root_url'] + 'xiangce/'
-        yield from ParseUtil.start_request(image_page_url, ImagesParser().parse, meta)
+        home_page_url = meta['root_url']
+        yield from ParseUtil.start_request_with_lua(home_page_url, HouseHomePageParser().parse, meta)
 
     def parse_basic_info(self, response):
         basic_dict = {}
@@ -77,7 +77,7 @@ class DetailParser():
 
     def parse_ancillary_facility(self, response):
         facility_dict = {}
-        facility_li_s = response.xpath('/html/body/div[4]/div[1]/ul[4]/li')
+        facility_li_s = response.xpath('//h2[text()="配套信息"]/following::ul[@class="x-box"]/li')
         for li in facility_li_s:
             label = li.xpath('normalize-space(span[@class="label"]/text())').extract()[0]
             label_val = li.xpath('normalize-space(span[contains(@class,"label-val")]/text())').extract()[0]
@@ -85,12 +85,14 @@ class DetailParser():
                 around_info_dict = {}
                 div_s = li.xpath('div/div')
                 for div in div_s:
+                    print(div.extract())
                     around_info_label = div.xpath('normalize-space(text())').extract()[0]
                     value_list = div.xpath('span/span')
+
                     value_dict = {}
                     for value in value_list:
-                        value_title = value.xpath('normalize-space(@title)').extract()[0]
-                        value_text = value.xpath('normalize-space(text())').extract()[0]
+                        value_title = value.xpath('@title').extract()[0]
+                        value_text = value.xpath('text()').extract()[0]
                         value_dict[value_text] = value_title
                     around_info_dict[around_info_label] = value_dict
                 facility_dict[label] = around_info_dict

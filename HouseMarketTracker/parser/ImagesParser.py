@@ -26,7 +26,3 @@ class ImagesParser():
 
         comments_url = meta['root_url'] + 'pinglun/'
         yield from ParseUtil.start_request(comments_url, CommentParser().parse, meta)
-        # yield item
-        # house_layout_url = meta['root_url'] + 'huxingtu/'
-        # yield from ParseUtil.start_request(house_layout_url, HouseLayoutParser().parse, meta)
-        # print(meta)

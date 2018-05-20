@@ -1,21 +1,18 @@
 import re
 
-from HouseMarketTracker.parser.DetailParser import DetailParser
+from HouseMarketTracker.parser.ImagesParser import ImagesParser
 from HouseMarketTracker.parser.ParseUtil import ParseUtil
 
 
 class HouseHomePageParser():
 
     def parse(self, response):
-        # print(response.body.decode('utf-8'))
-
         meta = response.meta
         item = meta['item']
         item['house_layout'] = self.parse_layout(response)
 
-        house_detail_url = meta['root_url'] + 'xiangqing/'
-        print(house_detail_url + '---------------------------------')
-        yield from ParseUtil.start_request(house_detail_url, DetailParser().parse, meta)
+        images_url = meta['root_url'] + 'xiangce/'
+        yield from ParseUtil.start_request(images_url, ImagesParser().parse, meta)
 
     def parse_layout(self, response):
         layout_list = []
