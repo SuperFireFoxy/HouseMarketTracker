@@ -1,7 +1,7 @@
 # HouseMarketTracker
 A simple implement of Scrapy spider to track house market. All house information resources are come from `lianjia.com`.
 
-# Crawl Data
+# Result Data
 
 Now, all Chengdu's new house info has be crawled with this code, and here is a demo result which will let you have a quick review of this project.
 
