@@ -1,7 +1,9 @@
 # HouseMarketTracker
-A simple implement of Scrapy spider to track house market
+A simple implement of Scrapy spider to track house market. All house information resources are come from `lianjia.com`.
 
-# Testing Data
+# Result Data
+
+Now, all Chengdu's new house info has be crawled with this code, and here is a demo result which will let you have a quick review of this project.
 
 + DataBase: MongoDB
 + DB-Name: house_info_db_2018-05-20
@@ -9,6 +11,8 @@ A simple implement of Scrapy spider to track house market
 + Port: 27017
 + UserName: dba1
 + Password: test
+
+***Note:*** *there're some information still missing, because it's still in development. So, if you have any intrest or question about this work, pls let me know via `salsa2010@matlabchina.cn`*
 
 # Single Item Demo
 
