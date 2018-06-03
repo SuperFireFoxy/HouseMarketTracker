@@ -125,7 +125,7 @@ MONGO_PSW = "dba1_psw"
 # LOG
 LOG_LEVEL = 'INFO'
 # LOG_LEVEL = 'DEBUG'
-# LOG_FILE = 'spider.log'
+LOG_FILE = 'spider.log'
 
 RETRY_ENABLED = True
 RETRY_TIMES = 10
